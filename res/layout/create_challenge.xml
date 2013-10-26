@@ -46,10 +46,17 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical">
     </ListView>
-    <Button     android:id="@+id/add_new_task"
+    <Button     android:id="@+id/create_new_task"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Create new task"
                 android:onClick="createNewTask"
+                />
+    <Button
+                android:id="@+id/submit_new_challenge"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Challenge!"
+                android:onClick="submitChallenge"
                 />
 </LinearLayout>

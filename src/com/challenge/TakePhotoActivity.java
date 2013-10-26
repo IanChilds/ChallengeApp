@@ -44,6 +44,16 @@ public class TakePhotoActivity extends Activity implements Camera.PictureCallbac
     public void onResume() {
         super.onResume();
         camera = Camera.open();
+        Camera.Parameters cameraParameters = camera.getParameters();
+        int thinnest = Integer.MAX_VALUE;
+        for (Camera.Size s : cameraParameters.getSupportedPictureSizes()) {
+            if (s.width < thinnest) {
+                cameraParameters.setPictureSize(s.width, s.height);
+                thinnest = s.width;
+            }
+        }
+
+        camera.setParameters(cameraParameters);
         camera.setDisplayOrientation(90);
         camera.startPreview();
     }

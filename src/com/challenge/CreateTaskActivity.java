@@ -14,10 +14,12 @@ import android.widget.*;
  * Time: 11:43
  * To change this template use File | Settings | File Templates.
  */
-public class CreateTaskActivity extends Activity {
+public class CreateTaskActivity extends Activity { // This can easily be made into an "Edit Task Activity"
     public final static int TASK_TAKE_PHOTO_REQUEST = 1;
-    private TextView instructions;
-    private TextView text;
+    public final static String TASK_ID = "com.challenge.createtask.taskid";
+    public final static int TASK_ADDED = 6;
+    private EditText instructions;
+    private EditText text;
     private CheckBox photoCheckBox;
     private ImageView photoImageView;
     private Bitmap photo = null;
@@ -31,12 +33,13 @@ public class CreateTaskActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_task);
-        text = (TextView)findViewById(R.id.correct_text_answer);
+        text = (EditText)findViewById(R.id.correct_text_answer);
         photoCheckBox = (CheckBox)findViewById(R.id.want_photo_checkbox);
         photoImageView = (ImageView)findViewById(R.id.create_task_photo);
         gpsCheckBox = (CheckBox)findViewById(R.id.want_gps_checkbox);
         gpsMap = (ImageView)findViewById(R.id.choose_gps_coordinates);
         timeCheckBox = (CheckBox)findViewById(R.id.want_time_checkbox);
+        instructions = (EditText)findViewById(R.id.task_instructions);
         setSpinner();
     }
 
@@ -156,14 +159,17 @@ public class CreateTaskActivity extends Activity {
         // TODO: we should put a dialog up if the data is not prepared.
         if (allDataIsReady()) {
             Task task = buildTask();
-
-
-            }
+            int taskID = GlobalDataStore.addTask(task);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(TASK_ID, taskID);
+            setResult(TASK_ADDED, resultIntent);
+            finish();
+        }
     }
 
     private Task buildTask() {
         Task task = new Task();
-        task.description = instructions.toString();
+        task.description = instructions.getText().toString();
         switch(spinnerSelectedPosition) {
             // Items are Select, GPS, Photo, Text
             case 1:
@@ -178,7 +184,7 @@ public class CreateTaskActivity extends Activity {
 
             case 3:
                 task.type = Task.TaskType.TEXT;
-                task.text = text.toString();
+                task.submissionText = text.toString();
                 task.useGPSConstraint = false;
                 task.useTimeConstraint = false;
                 break;
@@ -190,9 +196,8 @@ public class CreateTaskActivity extends Activity {
         return task;
     }
 
-
     private boolean allDataIsReady() {
-        if (text.toString().length() == 0) return false;
+        if (instructions.getText().toString().length() == 0) return false;
         switch(spinnerSelectedPosition) {
             // Items are Select, GPS, Photo, Text
             case 0:
@@ -202,13 +207,11 @@ public class CreateTaskActivity extends Activity {
             case 2:
                 return (photo != null);
             case 3:
-                return (text.toString().length() > 0);
+                return (text.getText().toString().length() > 0);
             default:
                 // Something has gone wrong.
                 return false;
         }
-
     }
-
 
 }

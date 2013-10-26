@@ -10,7 +10,7 @@
             android:layout_height="50dp"
             />
     <EditText
-            android:id="@+id/instructions"
+            android:id="@+id/task_instructions"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"

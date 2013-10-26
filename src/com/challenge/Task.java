@@ -19,7 +19,11 @@ public class Task {
     public boolean useTimeConstraint;
     public TimeConstraint timeConstraint;
     public Bitmap photo;
-    public String text;
+    public String submissionText;
+
+    public Task() {
+
+    }
 
     public enum TaskType {
         GPS, PHOTO, TEXT

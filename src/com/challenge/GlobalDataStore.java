@@ -2,6 +2,9 @@ package com.challenge;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Binnie
@@ -13,6 +16,16 @@ public class GlobalDataStore {
     public static String currUser;
     public static Profile currProfile;
 
+    public static List<Task> taskList = new ArrayList<Task>();
+    public static int addTask(Task task) {
+        taskList.add(task);
+        return taskList.size() - 1;
+    }
+
+    public static Task getTask (int taskID) {
+        return taskList.get(taskID);
+    }
+
     public static Bitmap lastPhotoTaken;
 
     public static void storeLastPhotoTaken(Bitmap photo) {
@@ -22,4 +35,6 @@ public class GlobalDataStore {
     public static Bitmap getLastPhotoTaken() {
         return lastPhotoTaken;
     }
+
+
 }
