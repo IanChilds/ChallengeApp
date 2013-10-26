@@ -44,6 +44,16 @@ public class TakePhotoActivity extends Activity implements Camera.PictureCallbac
     public void onResume() {
         super.onResume();
         camera = Camera.open();
+        Camera.Parameters cameraParameters = camera.getParameters();
+        int thinnest = Integer.MAX_VALUE;
+        for (Camera.Size s : cameraParameters.getSupportedPictureSizes()) {
+            if (s.width < thinnest) {
+                cameraParameters.setPictureSize(s.width, s.height);
+                thinnest = s.width;
+            }
+        }
+
+        camera.setParameters(cameraParameters);
         camera.setDisplayOrientation(90);
         camera.startPreview();
     }
@@ -80,8 +90,8 @@ public class TakePhotoActivity extends Activity implements Camera.PictureCallbac
     @Override
     public void onPictureTaken(byte[] bytes, Camera camera) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
-        bitmap = Bitmap.createBitmap(bitmap, 0, 0, size, size);
+ //       int size = Math.min(bitmap.getWidth(), bitmap.getHeight());
+ //       bitmap = Bitmap.createBitmap(bitmap, 0, 0, size, size);
         bitmap = Bitmap.createScaledBitmap(bitmap, 128, 128, false);
         GlobalDataStore.storeLastPhotoTaken(bitmap);
         setResult(PHOTO_TAKEN, null);

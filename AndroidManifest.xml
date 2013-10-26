@@ -31,7 +31,8 @@
         <activity android:name=".CreateTaskActivity"/>
         <activity android:name=".FindChallengeActivity"/>
         <activity android:name=".ChallengeActivity"/>
-        <activity android:name=".TakePhotoActivity"/>
+        <activity android:name=".TakePhotoActivity"
+                android:noHistory="true"/>
         <activity android:name=".VerifyPhotoActivity"/>
         <activity android:name=".TakeTaskActivity"/>
         <activity android:name=".TakeChallengeActivity"/>

@@ -12,13 +12,18 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class Task {
-    private String description;
-    private TaskType type;
-    private boolean useGPSConstraint;
-    private GPSConstraint gpsConstraint;
-    private boolean useTimeConstraint;
-    private TimeConstraint timeConstraint;
-    private Bitmap photo;
+    public String description;
+    public TaskType type;
+    public boolean useGPSConstraint;
+    public GPSConstraint gpsConstraint;
+    public boolean useTimeConstraint;
+    public TimeConstraint timeConstraint;
+    public Bitmap photo;
+    public String submissionText;
+
+    public Task() {
+
+    }
 
     public enum TaskType {
         GPS, PHOTO, TEXT
