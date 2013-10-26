@@ -14,7 +14,8 @@ import android.widget.ImageView;
  * To change this template use File | Settings | File Templates.
  */
 public class CreateChallengeActivity extends Activity {
-    public final static int TAKE_PHOTO_REQUEST = 1;
+    public final static int CHALLENGE_TAKE_PHOTO_REQUEST = 1;
+    public final static int CREATE_TASK_REQUEST = 2;
     private ImageView photo;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -25,17 +26,18 @@ public class CreateChallengeActivity extends Activity {
 
     public void takePhoto(View view) {
         Intent intent = new Intent(this, TakePhotoActivity.class);
-        startActivityForResult(intent, TAKE_PHOTO_REQUEST);
+        startActivityForResult(intent, CHALLENGE_TAKE_PHOTO_REQUEST);
         // TODO: need to verify that the TakePhotoActivity only returns RESULT_OK once it has taken a photo.
     }
 
     public void createNewTask(View view) {
-
+        Intent intent = new Intent(this, CreateTaskActivity.class);
+        startActivityForResult(intent, CREATE_TASK_REQUEST);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case TAKE_PHOTO_REQUEST:
+            case CHALLENGE_TAKE_PHOTO_REQUEST:
                 if (resultCode == TakePhotoActivity.PHOTO_TAKEN) {
                     photo.setImageBitmap(GlobalDataStore.getLastPhotoTaken());
                 }

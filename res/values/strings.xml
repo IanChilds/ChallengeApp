@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ChallengeApp</string>
+    <string-array name="task_type_array">
+        <item>Select task type...</item>
+        <item>GPS</item>
+        <item>Photo</item>
+        <item>Text</item>
+    </string-array>
 </resources>

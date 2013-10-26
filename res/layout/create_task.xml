@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <Spinner
+            android:id="@+id/task_type_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            />
+    <EditText
+            android:id="@+id/instructions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:hint="Instructions..."
+            />
+    <EditText
+            android:id="@+id/correct_text_answer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:hint="Correct answer is..."
+            />
+    <CheckBox android:id="@+id/want_photo_checkbox"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Add example photo"
+              android:onClick="wantPhotoClicked"/>
+    <ImageView android:id="@+id/create_task_photo"
+               android:layout_width="fill_parent"
+               android:layout_height="200dp"
+               android:onClick="takePhoto"
+            />
+    <CheckBox android:id="@+id/want_gps_checkbox"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Add GPS coordinate"
+              android:onClick="wantGPSClicked"/>
+    <ImageView
+            android:id="@+id/choose_gps_coordinates"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            />
+    <CheckBox android:id="@+id/want_time_checkbox"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Add time restriction"
+              android:onClick="wantTimeClicked"/>
+    <Button     android:id="@+id/add_this_task"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Add this task"
+                android:onClick="addThisTask"
+            />
+
+</LinearLayout>
