@@ -1,7 +1,11 @@
 package com.challenge;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +15,36 @@ import android.os.Bundle;
  * To change this template use File | Settings | File Templates.
  */
 public class HomePageActivity extends Activity {
+    private ArrayList<Class> activities = new ArrayList<Class>();
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
+    }
+
+    public void loadProfileActivity(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void loadFindChallengeActivity(View view) {
+        Intent intent = new Intent(this, FindChallengeActivity.class);
+        startActivity(intent);
+    }
+
+    public void loadResumeActivity(View view) {
+        Intent intent = new Intent(this, ResumeChallengeActivity.class);
+        startActivity(intent);
+    }
+
+    public void loadCreateActivity(View view) {
+        Intent intent = new Intent(this, CreateChallengeActivity.class);
+        startActivity(intent);
+    }
+
+    public void loadVerifyActivity(View view) {
+        Intent intent = new Intent(this, VerifyPhotoActivity.class);
+        startActivity(intent);
     }
 }

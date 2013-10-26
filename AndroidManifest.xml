@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.challenge"
+          android:versionCode="1"
+          android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="15"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+        <activity android:name=".LoginActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".CreateChallengeActivity"/>
+        <activity android:name=".CreateTaskActivity"/>
+        <activity android:name=".FindChallengeActivity"/>
+        <activity android:name=".ChallengeActivity"/>
+        <activity android:name=".TakePhotoActivity"/>
+        <activity android:name=".VerifyPhotoActivity"/>
+        <activity android:name=".TakeTaskActivity"/>
+        <activity android:name=".TakeChallengeActivity"/>
+        <activity android:name=".ResumeChallengeActivity"/>
+        <activity android:name=".HomePageActivity"/>
+    </application>
+</manifest>

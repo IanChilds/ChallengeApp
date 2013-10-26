@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <Button
+            android:id="@+id/Profile"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:onClick="loadProfileActivity"
+            android:text="Profile"
+            />
+    <Button
+            android:id="@+id/Take"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:onClick="loadFindChallengeActivity"
+            android:text="Take"
+            />
+    <Button
+            android:id="@+id/Resume"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:onClick="loadResumeActivity"
+            android:text="Resume"
+            />
+    <Button
+            android:id="@+id/Create"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:onClick="loadCreateActivity"
+            android:text="Create"
+            />
+    <Button
+            android:id="@+id/Verify"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:onClick="loadVerifyActivity"
+            android:text="Verify"
+            />
+</LinearLayout>
+
+

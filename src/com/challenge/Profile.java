@@ -8,4 +8,7 @@ package com.challenge;
  * To change this template use File | Settings | File Templates.
  */
 public class Profile {
+    private String name;
+
+    public String getName() { return name; }
 }
