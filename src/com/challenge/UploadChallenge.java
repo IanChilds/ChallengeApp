@@ -1,6 +1,7 @@
 package com.challenge;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UploadChallenge {
+public class UploadChallenge extends AsyncTask<Void, Void, Void> {
     private Challenge challenge;
     private Map<String, Bitmap> images = new HashMap<String, Bitmap>();
     private String xmlString;
@@ -55,14 +56,15 @@ public class UploadChallenge {
 
             xmlDoc.append("</task>\n");
         }
+        xmlDoc.append("</challenge>\n");
 
         xmlString = xmlDoc.toString();
     }
 
-    public String doInBackground(Void... input) {
+    public Void doInBackground(Void... input) {
         String responseString;
         try{
-            String postURL = "http://app-republic.appspot.com/image"; // URL on server for echo test
+            String postURL = "http://norse-feat-380.appspot.com/uploadChallenge"; // URL on server for echo test
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost postRequest = new HttpPost(postURL);
 
@@ -74,7 +76,7 @@ public class UploadChallenge {
                 fileEntity.addPart(key, new ByteArrayBody(byteStream.toByteArray(), "image/png", key + ".png"));
             }
 
-            fileEntity.addPart("tasks", new StringBody(xmlString));
+            fileEntity.addPart("challenge", new StringBody(xmlString));
 
             postRequest.setEntity(fileEntity);
             HttpResponse response = httpclient.execute(postRequest); // Execute request against server, get response
@@ -91,7 +93,8 @@ public class UploadChallenge {
         } catch (Exception e){
             responseString = e.toString();
         }
-        return responseString;
+
+        return null;
     }
 
     public void onPostExecute(String response){ }
