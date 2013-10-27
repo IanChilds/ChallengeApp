@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -64,21 +65,25 @@ public class UploadChallenge extends AsyncTask<Void, Void, Void> {
     public Void doInBackground(Void... input) {
         String responseString;
         try{
-            String postURL = "http://norse-feat-380.appspot.com/uploadChallenge"; // URL on server for echo test
+            String postURL = "http://norse-feat-380.appspot.com/addChallenge"; // URL on server for echo test
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost postRequest = new HttpPost(postURL);
 
+            //MultipartEntityBuilder fileEntity = MultipartEntityBuilder.create(); // new MultipartEntityBuilder(HttpMultipartMode.STRICT);
             MultipartEntity fileEntity = new MultipartEntity(HttpMultipartMode.STRICT);
+            //fileEntity.setStrictMode();
 
             for(String key : images.keySet()){
                 ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
                 images.get(key).compress(Bitmap.CompressFormat.PNG, 50, byteStream);
+                //fileEntity.addBinaryBody(key, byteStream.toByteArray());
                 fileEntity.addPart(key, new ByteArrayBody(byteStream.toByteArray(), "image/png", key + ".png"));
             }
 
+            //fileEntity.addTextBody("challenge", xmlString);
             fileEntity.addPart("challenge", new StringBody(xmlString));
 
-            postRequest.setEntity(fileEntity);
+            postRequest.setEntity(fileEntity); //fileEntity.build());
             HttpResponse response = httpclient.execute(postRequest); // Execute request against server, get response
             StatusLine statusLine = response.getStatusLine();
             if(statusLine.getStatusCode() == HttpStatus.SC_OK){ // If everything went ok, read off response
