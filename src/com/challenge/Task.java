@@ -35,7 +35,7 @@ public class Task {
     public static final String INCORRECT = "X";
 
     static {
-        stateToString.put(TaskState.COMPLETE, CORRECT);
+        stateToString.put(TaskState.CORRECT, CORRECT);
         stateToString.put(TaskState.INCOMPLETE, INCOMPLETE);
         stateToString.put(TaskState.INCORRECT, INCORRECT);
     }
@@ -45,7 +45,7 @@ public class Task {
     }
 
     public enum TaskState {
-        COMPLETE, INCOMPLETE, INCORRECT;
+        CORRECT, INCOMPLETE, INCORRECT;
     }
 
     public class GPSConstraint {
