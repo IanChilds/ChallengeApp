@@ -15,6 +15,7 @@ import java.util.List;
 public class GlobalDataStore {
     public static String currUser;
     public static Profile currProfile;
+    public static LocationHelper locationHelper;
 
     public static List<Task> taskList = new ArrayList<Task>();
     public static List<Challenge> challengeList = new ArrayList<Challenge>();

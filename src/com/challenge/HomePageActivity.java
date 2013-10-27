@@ -1,7 +1,9 @@
 package com.challenge;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,6 +23,8 @@ public class HomePageActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        GlobalDataStore.locationHelper = new LocationHelper((LocationManager)getSystemService(Context.LOCATION_SERVICE));
     }
 
     public void loadProfileActivity(View view) {
