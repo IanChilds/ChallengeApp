@@ -2,6 +2,7 @@ package com.challenge;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,5 +14,21 @@ import android.os.Bundle;
 public class VerifyPhotoActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get data from server to populate the view.
+    }
+
+    public void replyNotSure(View view) {
+
+        finish();
+    }
+
+    public void replyAnswerIsWrong(View view) {
+
+        finish();
+    }
+
+    public void replyAnswerIsCorrect(View view) {
+
+        finish();
     }
 }

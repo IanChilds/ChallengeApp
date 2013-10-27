@@ -1,5 +1,7 @@
 package com.challenge;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +13,11 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class Challenge {
-    private String name;
-    private String description;
-    private int estimatedTime;
-    private float rating;
+    public String name;
+    public String description;
+    public int estimatedTime;
+    public float rating;
+    public int dataStorePosition;
+    public Bitmap photo;
     private List<Task> tasks = new ArrayList<Task>();
 }

@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +36,17 @@ public class CreateChallengeActivity extends Activity {
                                                       android.R.layout.simple_list_item_1,
                                                       taskListItems);
         taskListView.setAdapter(taskListItemsAdapter);
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int ii = 0;
+                // Just want to get to here.
+                Intent intent = new Intent(view.getContext(), EditTaskActivity.class);
+                intent.putExtra(EditTaskActivity.TASK_OPENED_FOR_EDITING, true);
+                intent.putExtra(EditTaskActivity.TASK_OPENED, tasks.get(i).dataStorePosition);
+                startActivityForResult(intent, CREATE_TASK_REQUEST);
+            }
+        });
     }
 
     public void takePhoto(View view) {
@@ -48,7 +56,7 @@ public class CreateChallengeActivity extends Activity {
     }
 
     public void createNewTask(View view) {
-        Intent intent = new Intent(this, CreateTaskActivity.class);
+        Intent intent = new Intent(this, EditTaskActivity.class);
         startActivityForResult(intent, CREATE_TASK_REQUEST);
     }
 
@@ -60,13 +68,24 @@ public class CreateChallengeActivity extends Activity {
                 }
 
             case CREATE_TASK_REQUEST:
-                if (resultCode == CreateTaskActivity.TASK_ADDED) {
-                    int taskId = data.getIntExtra(CreateTaskActivity.TASK_ID, -1);
+                if (resultCode == EditTaskActivity.TASK_ADDED) {
+                    int taskId = data.getIntExtra(EditTaskActivity.TASK_ID, -1);
                     if (taskId >= 0) {
                         Task task = GlobalDataStore.getTask(taskId);
                         tasks.add(task);
                         taskListItems.add(task.description);
                         taskListItemsAdapter.notifyDataSetChanged();
+                    }
+                }
+                else if (resultCode == EditTaskActivity.TASK_CHANGED) {
+                    int taskId = data.getIntExtra(EditTaskActivity.TASK_ID, -1);
+                    for (int ii = 0; ii < tasks.size(); ii++) {
+                        if (tasks.get(ii).dataStorePosition == taskId) {
+                            Task task = GlobalDataStore.getTask(taskId);
+                            tasks.set(ii, task);
+                            taskListItems.set(ii, task.description);
+                            taskListItemsAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
 

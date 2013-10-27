@@ -20,6 +20,7 @@ public class Task {
     public TimeConstraint timeConstraint;
     public Bitmap photo;
     public String submissionText;
+    public int dataStorePosition = -1;
 
     public Task() {
 
