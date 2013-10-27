@@ -1,11 +1,19 @@
 package com.challenge;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +25,24 @@ import java.util.List;
  * Time: 11:43
  * To change this template use File | Settings | File Templates.
  */
-public class CreateChallengeActivity extends Activity {
+public class CreateChallengeActivity extends FragmentActivity {
     public final static int CHALLENGE_TAKE_PHOTO_REQUEST = 1;
     public final static int CREATE_TASK_REQUEST = 2;
+    public final static int CHALLENGE_GET_GPS = 3;
     private ImageView photoImageView;
     private Bitmap photo;
     private EditText title;
     private EditText description;
+    private GPSConstraint gpsConstraint = new GPSConstraint();
+    private boolean gpsConstraintSet = false;
     private List<Task> tasks = new ArrayList<Task>();
     ArrayList<String> taskListItems = new ArrayList<String>();
     ArrayAdapter<String> taskListItemsAdapter;
     ListView taskListView;
+    private GoogleMap map;
+    private SupportMapFragment fragment;
+    private MarkerOptions m;
+    private boolean markerSelected;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +64,22 @@ public class CreateChallengeActivity extends Activity {
                 startActivityForResult(intent, CREATE_TASK_REQUEST);
             }
         });
+        setUpMap();
+    }
+
+    public void setUpMap() {
+        fragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        map = fragment.getMap();
+        Location myLoc = GlobalDataStore.locationHelper.getLatestLocation();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLoc.getLatitude(), myLoc.getLongitude()), 15.0f));
+        UiSettings uiSettings = map.getUiSettings();
+        uiSettings.setAllGesturesEnabled(false);
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                setGPSMarker(fragment.getView());
+            }
+        });
     }
 
     public void takePhoto(View view) {
@@ -60,6 +91,16 @@ public class CreateChallengeActivity extends Activity {
     public void createNewTask(View view) {
         Intent intent = new Intent(this, EditTaskActivity.class);
         startActivityForResult(intent, CREATE_TASK_REQUEST);
+    }
+
+    public void setGPSMarker(View view) {
+        Intent intent = new Intent(view.getContext(), SelectGPSPointActivity.class);
+        if (gpsConstraintSet) {
+            intent.putExtra(SelectGPSPointActivity.LATITUDE, gpsConstraint.lat);
+            intent.putExtra(SelectGPSPointActivity.LONGITUDE, gpsConstraint.lon);
+            intent.putExtra(SelectGPSPointActivity.RANGE, gpsConstraint.range);
+        }
+        startActivityForResult(intent, CHALLENGE_GET_GPS);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -92,20 +133,47 @@ public class CreateChallengeActivity extends Activity {
                     }
                 }
 
+            case CHALLENGE_GET_GPS:
+                if (resultCode == SelectGPSPointActivity.POINT_ADDED) {
+                    gpsConstraint.lat = data.getDoubleExtra(SelectGPSPointActivity.LATITUDE, 0);
+                    gpsConstraint.lon = data.getDoubleExtra(SelectGPSPointActivity.LONGITUDE, 0);
+                    gpsConstraint.range = data.getDoubleExtra(SelectGPSPointActivity.RANGE, 100);
+                    gpsConstraintSet = true;
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(gpsConstraint.lat, gpsConstraint.lon), 15.0f));
+                    if (markerSelected) {
+                        map.clear();
+                    }
+                    m = new MarkerOptions();
+                    m.position(new LatLng(gpsConstraint.lat, gpsConstraint.lon));
+                    m.title("Marker");
+                    m.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                    map.addMarker(m);
+                    markerSelected = true;
+                }
+
             default:
                 // Don't expect to hit this
         }
     }
 
     public void submitChallenge(View view) {
-        Challenge challenge = new Challenge();
-        challenge.creatorName = GlobalDataStore.currUser;
-        challenge.name = title.getText().toString();
-        challenge.description = description.getText().toString();
-        challenge.photo = photo;
-        for (Task task : tasks) challenge.tasks.add(task);
+        if (uploadPermitted()) {
+            Challenge challenge = new Challenge();
+            challenge.creatorName = GlobalDataStore.currUser;
+            challenge.name = title.getText().toString();
+            challenge.description = description.getText().toString();
+            challenge.photo = photo;
+            for (Task task : tasks) challenge.tasks.add(task);
 
-        UploadChallenge uploadChallenge = new UploadChallenge(challenge);
-        uploadChallenge.execute();
+            UploadChallenge uploadChallenge = new UploadChallenge(challenge);
+            uploadChallenge.execute();
+        }
+    }
+
+    private boolean uploadPermitted() {
+        if (photo == null) return false;
+        if (title.getText().toString().length() == 0) return false;
+        if (description.getText().toString().length() == 0) return false;
+        return true;
     }
 }

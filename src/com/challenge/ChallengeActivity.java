@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.*;
+
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +18,13 @@ import android.view.View;
 public class ChallengeActivity extends Activity {
     public final static String CHALLENGE_ID = "com.challenge.challenge_ID";
     private Challenge challenge;
+    private TextView title;
+    private TextView description;
+    private ImageView photoImageView;
+    ArrayList<String> taskListItems = new ArrayList<String>();
+    ArrayAdapter<String> taskListItemsAdapter;
+    ListView taskListView;
+
     // Fill in all bits of the challenge activity based on the challenge received.
 
     public void onCreate(Bundle savedInstanceState) {
@@ -22,6 +32,25 @@ public class ChallengeActivity extends Activity {
         Intent intent = getIntent();
         int challengeID = intent.getIntExtra(CHALLENGE_ID, -1);
         challenge = GlobalDataStore.getChallenge(challengeID);
+        setChallengeView();
+    }
+
+    private void setChallengeView() {
+        title = (TextView)findViewById(R.id.challenge_title);
+        title.setText(challenge.name);
+        description = (TextView)findViewById(R.id.challenge_description);
+        description.setText(challenge.description);
+        photoImageView = (ImageView)findViewById(R.id.challenge_photo);
+        photoImageView.setImageBitmap(challenge.photo);
+
+        for (Task task : challenge.tasks) {
+            taskListItems.add(task.description);
+        }
+        taskListView = (ListView)findViewById(R.id.task_list);
+        taskListItemsAdapter=new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                taskListItems);
+        taskListView.setAdapter(taskListItemsAdapter);
     }
 
     public void takeChallenge(View view) {

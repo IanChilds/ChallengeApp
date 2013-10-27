@@ -27,7 +27,7 @@ public class TakeTaskActivity extends Activity {
     private Bitmap actualPhoto = null;
     private ImageView exampleGpsMap = null;
     private ImageView actualGpsSubmissionMap = null;
-    private Task.GPSConstraint actualGpsSubmission = null;
+    private GPSConstraint actualGpsSubmission = null;
     private Button submitButton;
     private Task task;
 
