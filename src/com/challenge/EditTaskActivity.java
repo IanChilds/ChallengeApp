@@ -64,8 +64,9 @@ public class EditTaskActivity extends Activity { // This can easily be made into
                 break;
             case PHOTO:
                 spinnerSelectedPosition = 2;
-                photo = task.photo;  // Currently you have to have a photo
+                photo = task.examplePhoto;  // Currently you have to have a examplePhoto
                 photoImageView.setImageBitmap(photo);
+                photoCheckBox.setChecked(task.provideExamplePhoto);
                 gpsCheckBox.setChecked(task.useGPSConstraint);
                 if (task.useGPSConstraint) gps = task.gpsConstraint;
                 timeCheckBox.setChecked(task.useTimeConstraint);
@@ -74,7 +75,7 @@ public class EditTaskActivity extends Activity { // This can easily be made into
                 break;
             case TEXT:
                 spinnerSelectedPosition = 3;
-                text.setText(task.submissionText);
+                text.setText(task.text);
                 gpsCheckBox.setChecked(task.useGPSConstraint);
                 if (task.useGPSConstraint) gps = task.gpsConstraint;
                 timeCheckBox.setChecked(task.useTimeConstraint);
@@ -148,7 +149,7 @@ public class EditTaskActivity extends Activity { // This can easily be made into
         photoCheckBox.setVisibility(View.VISIBLE);
         photoImageView.setVisibility((photoCheckBox.isChecked()) ? View.VISIBLE : View.GONE);
         gpsCheckBox.setVisibility(View.VISIBLE);
-        gpsMap.setVisibility((photoCheckBox.isChecked()) ? View.VISIBLE : View.GONE);
+        gpsMap.setVisibility((gpsCheckBox.isChecked()) ? View.VISIBLE : View.GONE);
         timeCheckBox.setVisibility(View.VISIBLE);
     }
 
@@ -157,7 +158,7 @@ public class EditTaskActivity extends Activity { // This can easily be made into
         photoCheckBox.setVisibility(View.GONE);
         photoImageView.setVisibility(View.GONE);
         gpsCheckBox.setVisibility(View.VISIBLE);
-        gpsMap.setVisibility((photoCheckBox.isChecked()) ? View.VISIBLE : View.GONE);
+        gpsMap.setVisibility((gpsCheckBox.isChecked()) ? View.VISIBLE : View.GONE);
         timeCheckBox.setVisibility(View.VISIBLE);
     }
 
@@ -189,7 +190,7 @@ public class EditTaskActivity extends Activity { // This can easily be made into
                     photo = GlobalDataStore.getLastPhotoTaken();
                     photoImageView.setImageBitmap(photo);
                 }
-
+                break;
             default:
                 // Don't expect to hit this
         }
@@ -228,14 +229,15 @@ public class EditTaskActivity extends Activity { // This can easily be made into
                 task.type = Task.TaskType.GPS;
             case 2:
                 task.type = Task.TaskType.PHOTO;
-                task.photo = photo;
+                task.examplePhoto = photo;
+                task.provideExamplePhoto = photoCheckBox.isChecked();
                 task.useGPSConstraint = false;
                 task.useTimeConstraint = false;
                 break;
 
             case 3:
                 task.type = Task.TaskType.TEXT;
-                task.submissionText = text.getText().toString();
+                task.text = text.getText().toString();
                 task.useGPSConstraint = false;
                 task.useTimeConstraint = false;
                 break;
@@ -264,5 +266,4 @@ public class EditTaskActivity extends Activity { // This can easily be made into
                 return false;
         }
     }
-
 }
