@@ -18,7 +18,7 @@ public class Task {
     public TaskState taskState;
     public TaskType type;
     public boolean useGPSConstraint;
-    public GPSConstraint gpsConstraint;
+    public GPSConstraint gpsConstraint = new GPSConstraint();
     public GPSConstraint gpsConstraintSubmitted;
     public boolean useTimeConstraint;
     public TimeConstraint timeConstraint;

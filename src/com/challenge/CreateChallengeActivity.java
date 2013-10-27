@@ -42,7 +42,7 @@ public class CreateChallengeActivity extends FragmentActivity {
     private GoogleMap map;
     private SupportMapFragment fragment;
     private MarkerOptions m;
-    private boolean markerSelected;
+    private boolean markerSelected = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
