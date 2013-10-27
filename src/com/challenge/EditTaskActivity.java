@@ -29,7 +29,7 @@ public class EditTaskActivity extends Activity { // This can easily be made into
     private Bitmap photo = null;
     private CheckBox gpsCheckBox;
     private ImageView gpsMap = null;
-    private Task.GPSConstraint gps = null;
+    private GPSConstraint gps = null;
     private CheckBox timeCheckBox;
     private Spinner spinner;
     private int spinnerSelectedPosition;
@@ -37,7 +37,7 @@ public class EditTaskActivity extends Activity { // This can easily be made into
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_task);
+        setContentView(R.layout.edit_task);
         text = (EditText)findViewById(R.id.correct_text_answer);
         photoCheckBox = (CheckBox)findViewById(R.id.want_photo_checkbox);
         photoImageView = (ImageView)findViewById(R.id.create_task_photo);

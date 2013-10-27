@@ -40,5 +40,6 @@
         <activity android:name=".TakeChallengeActivity"/>
         <activity android:name=".ResumeChallengeActivity"/>
         <activity android:name=".HomePageActivity"/>
+        <activity android:name=".SelectGPSPointActivity"/>
     </application>
 </manifest>

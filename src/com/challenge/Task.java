@@ -48,18 +48,6 @@ public class Task {
         CORRECT, INCOMPLETE, INCORRECT;
     }
 
-    public class GPSConstraint {
-        public float lat;
-        public float lon;
-        public float range;
-
-        @Override
-        public String toString(){
-            return "" + lat + "," + lon + "," + range;
-        }
-
-    }
-
     public class TimeConstraint {
         public Date startTime;
         public Date endTime;
