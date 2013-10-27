@@ -13,11 +13,13 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class Challenge {
+    public String creatorName;
     public String name;
     public String description;
     public int estimatedTime;
     public float rating;
     public int dataStorePosition;
     public Bitmap photo;
-    private List<Task> tasks = new ArrayList<Task>();
+    public List<Task> tasks = new ArrayList<Task>();
+    public int numTasksVisible;
 }

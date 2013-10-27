@@ -2,6 +2,7 @@ package com.challenge;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -19,8 +20,10 @@ import java.util.List;
 public class CreateChallengeActivity extends Activity {
     public final static int CHALLENGE_TAKE_PHOTO_REQUEST = 1;
     public final static int CREATE_TASK_REQUEST = 2;
-    private ImageView photo;
+    private ImageView photoImageView;
+    private Bitmap photo;
     private EditText title;
+    private EditText description;
     private List<Task> tasks = new ArrayList<Task>();
     ArrayList<String> taskListItems = new ArrayList<String>();
     ArrayAdapter<String> taskListItemsAdapter;
@@ -29,8 +32,9 @@ public class CreateChallengeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_challenge);
-        photo = (ImageView)findViewById(R.id.create_challenge_photo);
+        photoImageView = (ImageView)findViewById(R.id.create_challenge_photo);
         title = (EditText)findViewById(R.id.challenge_title);
+        description = (EditText)findViewById(R.id.challenge_description);
         taskListView = (ListView)findViewById(R.id.task_list);
         taskListItemsAdapter=new ArrayAdapter<String>(this,
                                                       android.R.layout.simple_list_item_1,
@@ -39,8 +43,6 @@ public class CreateChallengeActivity extends Activity {
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int ii = 0;
-                // Just want to get to here.
                 Intent intent = new Intent(view.getContext(), EditTaskActivity.class);
                 intent.putExtra(EditTaskActivity.TASK_OPENED_FOR_EDITING, true);
                 intent.putExtra(EditTaskActivity.TASK_OPENED, tasks.get(i).dataStorePosition);
@@ -52,7 +54,7 @@ public class CreateChallengeActivity extends Activity {
     public void takePhoto(View view) {
         Intent intent = new Intent(this, TakePhotoActivity.class);
         startActivityForResult(intent, CHALLENGE_TAKE_PHOTO_REQUEST);
-        // TODO: need to verify that the TakePhotoActivity only returns RESULT_OK once it has taken a photo.
+        // TODO: need to verify that the TakePhotoActivity only returns RESULT_OK once it has taken a examplePhoto.
     }
 
     public void createNewTask(View view) {
@@ -64,7 +66,8 @@ public class CreateChallengeActivity extends Activity {
         switch (requestCode) {
             case CHALLENGE_TAKE_PHOTO_REQUEST:
                 if (resultCode == TakePhotoActivity.PHOTO_TAKEN) {
-                    photo.setImageBitmap(GlobalDataStore.getLastPhotoTaken());
+                    photo = GlobalDataStore.getLastPhotoTaken();
+                    photoImageView.setImageBitmap(photo);
                 }
 
             case CREATE_TASK_REQUEST:
@@ -96,6 +99,11 @@ public class CreateChallengeActivity extends Activity {
 
     public void submitChallenge(View view) {
         Challenge challenge = new Challenge();
-        // Send a load of data to the back end.
+        challenge.creatorName = GlobalDataStore.currUser;
+        challenge.name = title.getText().toString();
+        challenge.description = description.getText().toString();
+        challenge.photo = photo;
+        for (Task task : tasks) challenge.tasks.add(task);
+
     }
 }
