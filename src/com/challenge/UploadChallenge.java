@@ -9,7 +9,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -41,16 +40,25 @@ public class UploadChallenge extends AsyncTask<Void, Void, Void> {
             xmlDoc.append("<task>\n");
             xmlDoc.append("<description>" + task.description + "</description>\n");
 
-            if(task.type == Task.TaskType.PHOTO){
-                String taskImage = "taskImage" + (imageNum++);
-                images.put(taskImage, task.examplePhoto);
-                xmlDoc.append("<photoEvidence>" + taskImage + "</photoEvidence>\n");
-            } else if(task.type == Task.TaskType.TEXT) {
-                xmlDoc.append("<textEvidence>" + task.text + "</textEvidence>\n");
+            switch (task.type) {
+                case PHOTO:
+                    String taskImage = "taskImage" + (imageNum++);
+                    images.put(taskImage, task.examplePhoto);
+                    xmlDoc.append("<photoEvidence>" + taskImage + "</photoEvidence>\n");
+                    break;
+                case TEXT:
+                    xmlDoc.append("<textEvidence>" + task.text + "</textEvidence>\n");
+                    break;
+                case GPS:
+                    xmlDoc.append("<gpsEvidence>" + task.gpsConstraint.toString() + "</gpsEvidence>");
+                    break;
+                default:
+                    break;
             }
 
-            if(task.useTimeConstraint)
+            if (task.useTimeConstraint) {
                 xmlDoc.append("<timeEvidence>" + "30.0" + "</timeEvidence>\n");
+            }
 
             if(task.useGPSConstraint)
                 xmlDoc.append("<gpsEvidence>" + task.gpsConstraint.toString() + "</gpsEvidence>\n");
@@ -65,7 +73,7 @@ public class UploadChallenge extends AsyncTask<Void, Void, Void> {
     public Void doInBackground(Void... input) {
         String responseString;
         try{
-            String postURL = "http://norse-feat-380.appspot.com/addChallenge"; // URL on server for echo test
+            String postURL = "http://alpine-avatar-381.appspot.com/addChallenge"; // URL on server for echo test
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost postRequest = new HttpPost(postURL);
 

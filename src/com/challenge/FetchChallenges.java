@@ -1,9 +1,6 @@
 package com.challenge;
 
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.util.Xml;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -16,10 +13,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xmlpull.v1.XmlPullParser;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,7 +33,7 @@ public class FetchChallenges extends AsyncTask<Void, Void, List<Challenge>> {
             HttpClient httpclient = new DefaultHttpClient();
 
             List<NameValuePair> httpParams = new ArrayList<NameValuePair>();
-            URI uri = URIUtils.createURI("http", "norse-feat-380.appspot.com", -1, "/getChallenges",
+            URI uri = URIUtils.createURI("http", "alpine-avatar-381.appspot.com", -1, "/getChallenges",
                     URLEncodedUtils.format(httpParams, "UTF-8"), null);
 
             HttpGet getRequest = new HttpGet(uri);
