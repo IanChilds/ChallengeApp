@@ -49,14 +49,20 @@ public class Task {
     }
 
     public class GPSConstraint {
-        private float lat;
-        private float lon;
-        private float range;
+        public float lat;
+        public float lon;
+        public float range;
+
+        @Override
+        public String toString(){
+            return "" + lat + "," + lon + "," + range;
+        }
+
     }
 
     public class TimeConstraint {
-        private Date startTime;
-        private Date endTime;
+        public Date startTime;
+        public Date endTime;
     }
 
 }

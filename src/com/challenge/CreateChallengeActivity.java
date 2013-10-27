@@ -105,5 +105,7 @@ public class CreateChallengeActivity extends Activity {
         challenge.photo = photo;
         for (Task task : tasks) challenge.tasks.add(task);
 
+        UploadChallenge uploadChallenge = new UploadChallenge(challenge);
+        uploadChallenge.execute();
     }
 }
