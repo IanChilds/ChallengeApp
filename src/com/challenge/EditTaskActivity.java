@@ -14,10 +14,14 @@ import android.widget.*;
  * Time: 11:43
  * To change this template use File | Settings | File Templates.
  */
-public class CreateTaskActivity extends Activity { // This can easily be made into an "Edit Task Activity"
+public class EditTaskActivity extends Activity { // This can easily be made into an "Edit Task Activity"
     public final static int TASK_TAKE_PHOTO_REQUEST = 1;
     public final static String TASK_ID = "com.challenge.createtask.taskid";
     public final static int TASK_ADDED = 6;
+    public final static int TASK_CHANGED = 7;
+    public final static String TASK_OPENED_FOR_EDITING = "com.challenge.task_opened_for_editing";
+    public final static String TASK_OPENED = "com.challenge.task_opened";
+    private boolean openedForEditing = false;
     private EditText instructions;
     private EditText text;
     private CheckBox photoCheckBox;
@@ -29,6 +33,7 @@ public class CreateTaskActivity extends Activity { // This can easily be made in
     private CheckBox timeCheckBox;
     private Spinner spinner;
     private int spinnerSelectedPosition;
+    private int taskIdReceived;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,42 @@ public class CreateTaskActivity extends Activity { // This can easily be made in
         timeCheckBox = (CheckBox)findViewById(R.id.want_time_checkbox);
         instructions = (EditText)findViewById(R.id.task_instructions);
         setSpinner();
+        Intent receivedIntent = getIntent();
+        if (receivedIntent != null) {
+            openedForEditing = receivedIntent.getBooleanExtra(TASK_OPENED_FOR_EDITING, false);
+            if (openedForEditing) {
+                taskIdReceived = receivedIntent.getIntExtra(TASK_OPENED, -1);
+                setOldData(GlobalDataStore.getTask(taskIdReceived));
+            }
+        }
+    }
+
+    private void setOldData(Task task) {
+        instructions.setText(task.description);
+        switch (task.type) {
+            case GPS:
+                // Not implemented
+                break;
+            case PHOTO:
+                spinnerSelectedPosition = 2;
+                photo = task.photo;  // Currently you have to have a photo
+                photoImageView.setImageBitmap(photo);
+                gpsCheckBox.setChecked(task.useGPSConstraint);
+                if (task.useGPSConstraint) gps = task.gpsConstraint;
+                timeCheckBox.setChecked(task.useTimeConstraint);
+                // haven't implemented time constraints yet.
+                setUpForPhotoSelected();
+                break;
+            case TEXT:
+                spinnerSelectedPosition = 3;
+                text.setText(task.submissionText);
+                gpsCheckBox.setChecked(task.useGPSConstraint);
+                if (task.useGPSConstraint) gps = task.gpsConstraint;
+                timeCheckBox.setChecked(task.useTimeConstraint);
+                setUpForTextSelected();
+                break;
+        }
+        spinner.setSelection(spinnerSelectedPosition);
     }
 
     private void setSpinner() {
@@ -158,12 +199,22 @@ public class CreateTaskActivity extends Activity { // This can easily be made in
         // Only do something if the data is prepared.
         // TODO: we should put a dialog up if the data is not prepared.
         if (allDataIsReady()) {
-            Task task = buildTask();
-            int taskID = GlobalDataStore.addTask(task);
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(TASK_ID, taskID);
-            setResult(TASK_ADDED, resultIntent);
-            finish();
+            if (!openedForEditing) {
+                Task task = buildTask();
+                int taskID = GlobalDataStore.addTask(task);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(TASK_ID, taskID);
+                setResult(TASK_ADDED, resultIntent);
+                finish();
+            }
+            else {
+                Task task = buildTask();
+                GlobalDataStore.setTask(taskIdReceived, task);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(TASK_ID, taskIdReceived);
+                setResult(TASK_CHANGED, resultIntent);
+                finish();
+            }
         }
     }
 
@@ -184,7 +235,7 @@ public class CreateTaskActivity extends Activity { // This can easily be made in
 
             case 3:
                 task.type = Task.TaskType.TEXT;
-                task.submissionText = text.toString();
+                task.submissionText = text.getText().toString();
                 task.useGPSConstraint = false;
                 task.useTimeConstraint = false;
                 break;
