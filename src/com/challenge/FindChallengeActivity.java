@@ -46,11 +46,13 @@ public class FindChallengeActivity extends FragmentActivity {
                 map.addMarker(m);
             }
         });
+
+        FetchChallenges fetchChallenges = new FetchChallenges();
+        fetchChallenges.execute();
     }
 
     public class ChallengeClickListener implements GoogleMap.OnMarkerClickListener {
         public boolean onMarkerClick(Marker marker) {
-
             return false;
         }
     }
