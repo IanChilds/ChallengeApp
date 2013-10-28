@@ -96,7 +96,6 @@ public class SelectGPSPointActivity extends FragmentActivity {
         circle = map.addCircle(new CircleOptions().center(latLng)
                                                   .radius(seekBar.getProgress())
                                                   .strokeWidth(3));
-        circle.setRadius(circle.getRadius() * 2);
     }
 
     public void removeMarker() {
