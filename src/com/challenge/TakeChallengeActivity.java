@@ -28,6 +28,7 @@ public class TakeChallengeActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.take_challenge);
         Intent intent = getIntent();
         int challengeID = intent.getIntExtra(ChallengeActivity.CHALLENGE_ID, -1);
         challenge = GlobalDataStore.getChallenge(challengeID);
@@ -35,7 +36,7 @@ public class TakeChallengeActivity extends Activity {
     }
 
     private void setUpTaskListView() {
-        taskListView = (ListView)findViewById(R.id.task_list);
+        taskListView = (ListView)findViewById(R.id.challenge_task_list);
         // Show all tasks that should be visible.
         for (int ii = 0; ii < challenge.numTasksVisible; ii++) {
             taskListItems.add(Task.stateToString.get(challenge.tasks.get(ii).taskState) + " " + tasks.get(ii).description);

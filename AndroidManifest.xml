@@ -41,5 +41,7 @@
         <activity android:name=".ResumeChallengeActivity"/>
         <activity android:name=".HomePageActivity"/>
         <activity android:name=".SelectGPSPointActivity"/>
+        <activity android:name=".FetchChallengesActivity"
+                  android:noHistory="true"/>
     </application>
 </manifest>

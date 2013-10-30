@@ -33,7 +33,9 @@ public class HomePageActivity extends Activity {
     }
 
     public void loadFindChallengeActivity(View view) {
-        Intent intent = new Intent(this, FindChallengeActivity.class);
+    //    Intent intent = new Intent(this, FindChallengeActivity.class);
+    //    startActivity(intent);
+        Intent intent = new Intent(this, FetchChallengesActivity.class);
         startActivity(intent);
     }
 

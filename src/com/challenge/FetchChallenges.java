@@ -25,6 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FetchChallenges extends AsyncTask<Void, Void, List<Challenge>> {
+    private FetchChallengesActivity parentActivity;
+
+    public FetchChallenges(FetchChallengesActivity fetchChallengesActivity) {
+        this.parentActivity = fetchChallengesActivity;
+    }
+
     @Override
     protected List<Challenge> doInBackground(Void... params) {
         List<Challenge> challenges = new ArrayList<Challenge>();
@@ -66,6 +72,7 @@ public class FetchChallenges extends AsyncTask<Void, Void, List<Challenge>> {
                     }
 
                     //TODO: startAsync to set photos
+                    challenges.add(challenge);
                 }
             } else{
                 response.getEntity().getContent().close();
@@ -80,6 +87,10 @@ public class FetchChallenges extends AsyncTask<Void, Void, List<Challenge>> {
 
     @Override
     protected void onPostExecute(List<Challenge> challenges){
-        //TODO: You now have the challenges
+        for (Challenge challenge : challenges)
+            if (!GlobalDataStore.challengeList.contains(challenge)) {
+                GlobalDataStore.addChallenge(challenge);
+            }
+        parentActivity.challengesLoaded();
     }
 }

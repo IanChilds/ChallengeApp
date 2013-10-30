@@ -29,6 +29,7 @@ public class ChallengeActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.challenge);
         Intent intent = getIntent();
         int challengeID = intent.getIntExtra(CHALLENGE_ID, -1);
         challenge = GlobalDataStore.getChallenge(challengeID);
@@ -41,12 +42,12 @@ public class ChallengeActivity extends Activity {
         description = (TextView)findViewById(R.id.challenge_description);
         description.setText(challenge.description);
         photoImageView = (ImageView)findViewById(R.id.challenge_photo);
-        photoImageView.setImageBitmap(challenge.photo);
+        if (challenge.photo != null) photoImageView.setImageBitmap(challenge.photo);
 
         for (Task task : challenge.tasks) {
             taskListItems.add(task.description);
         }
-        taskListView = (ListView)findViewById(R.id.task_list);
+        taskListView = (ListView)findViewById(R.id.challenge_task_list);
         taskListItemsAdapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 taskListItems);
