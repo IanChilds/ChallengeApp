@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class Task {
     public String description;
-    public TaskState taskState;
+    public TaskState taskState = TaskState.INCOMPLETE;
     public TaskType type;
     public boolean useGPSConstraint;
     public GPSConstraint gpsConstraint = new GPSConstraint();

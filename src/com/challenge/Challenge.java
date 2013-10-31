@@ -22,5 +22,5 @@ public class Challenge {
     public Bitmap photo;
     public List<Task> tasks = new ArrayList<Task>();
     public int numTasksVisible = 1;
-    public GPSConstraint gpsConstraint;
+    public GPSConstraint gpsConstraint = new GPSConstraint();
 }

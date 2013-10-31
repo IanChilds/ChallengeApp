@@ -38,10 +38,10 @@ public class FindChallengeActivity extends FragmentActivity {
 
         for (Challenge challenge : GlobalDataStore.challengeList) {
             MarkerOptions markerOptions = new MarkerOptions();
-            //markerOptions.position(new LatLng(challenge.gpsConstraint.lat, challenge.gpsConstraint.lon));
-            double lat = 51.49 + r.nextDouble() / 100;
-            double lng = -0.044 + r.nextDouble() / 100;
-            markerOptions.position(new LatLng(lat,lng));
+            markerOptions.position(new LatLng(challenge.gpsConstraint.lat, challenge.gpsConstraint.lon));
+            //double lat = 51.49 + r.nextDouble() / 100;
+            //double lng = -0.044 + r.nextDouble() / 100;
+            //markerOptions.position(new LatLng(lat,lng));
             markerOptions.title(challenge.name);
             Marker marker = map.addMarker(markerOptions);
             markerDataStorePos.put(marker, challenge.dataStorePosition);

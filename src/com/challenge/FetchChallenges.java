@@ -61,6 +61,9 @@ public class FetchChallenges extends AsyncTask<Void, Void, List<Challenge>> {
                     challenge.name = challengeTag.getElementsByTagName("name").item(0).getTextContent();
                     challenge.description = challengeTag.getElementsByTagName("description").item(0).getTextContent();
                     challenge.creatorName = challengeTag.getElementsByTagName("creator").item(0).getTextContent();
+                    String[] gpsConstraints = challengeTag.getElementsByTagName("startLocation").item(0).getTextContent().split(",");
+                    challenge.gpsConstraint.lat = Double.parseDouble(gpsConstraints[0]);
+                    challenge.gpsConstraint.lon = Double.parseDouble(gpsConstraints[1]);
                     //challenge.startLocation = challengeTag.getElementsByTagName("name").item(0).getTextContent();
                     NodeList taskList = challengeTag.getElementsByTagName("task");
                     for(int j = 0; j < taskList.getLength(); j++){
@@ -68,6 +71,11 @@ public class FetchChallenges extends AsyncTask<Void, Void, List<Challenge>> {
                         Element taskTag = (Element)taskList.item(j);
                         task.description = taskTag.getElementsByTagName("description").item(0).getTextContent();
                         String taskID = taskTag.getElementsByTagName("id").item(0).getTextContent();
+                        if (taskTag.getElementsByTagName("textEvidence").item(0) != null) {
+                            task.text = taskTag.getElementsByTagName("textEvidence").item(0).getTextContent();
+                        }
+                        else { task.text = ""; }
+                        GlobalDataStore.addTask(task);
                         challenge.tasks.add(task);
                     }
 

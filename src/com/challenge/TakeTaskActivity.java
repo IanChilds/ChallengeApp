@@ -18,7 +18,6 @@ public class TakeTaskActivity extends Activity {
     public final static int TASK_TAKE_PHOTO_REQUEST = 1;
     public final static int TASK_SUBMITTED = 8;
     public final static String TASK_TO_TAKE = "com.challenge.task_to_take";
-    private boolean openedForEditing = false;
     private TextView instructions;
     private EditText textAnswer;
     private ImageView examplePhotoImageView;

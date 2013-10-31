@@ -39,7 +39,7 @@ public class TakeChallengeActivity extends Activity {
         taskListView = (ListView)findViewById(R.id.challenge_task_list);
         // Show all tasks that should be visible.
         for (int ii = 0; ii < challenge.numTasksVisible; ii++) {
-            taskListItems.add(Task.stateToString.get(challenge.tasks.get(ii).taskState) + " " + tasks.get(ii).description);
+            taskListItems.add(Task.stateToString.get(challenge.tasks.get(ii).taskState) + " " + challenge.tasks.get(ii).description);
         }
         taskListItemsAdapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
@@ -48,10 +48,6 @@ public class TakeChallengeActivity extends Activity {
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(view.getContext(), EditTaskActivity.class);
-                intent.putExtra(EditTaskActivity.TASK_OPENED_FOR_EDITING, true);
-                intent.putExtra(EditTaskActivity.TASK_OPENED, tasks.get(i).dataStorePosition);
-                startActivityForResult(intent, TAKE_TASK_REQUEST);
             }
         });
     }
