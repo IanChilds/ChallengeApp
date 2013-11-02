@@ -1,4 +1,4 @@
-package com.challenge;
+package com.challenge.schema;
 
 import android.graphics.Bitmap;
 

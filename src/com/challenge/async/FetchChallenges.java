@@ -1,6 +1,10 @@
-package com.challenge;
+package com.challenge.async;
 
 import android.os.AsyncTask;
+import com.challenge.GlobalDataStore;
+import com.challenge.activities.FetchChallengesActivity;
+import com.challenge.schema.Challenge;
+import com.challenge.schema.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;

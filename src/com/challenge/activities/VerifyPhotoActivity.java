@@ -1,4 +1,4 @@
-package com.challenge;
+package com.challenge.activities;
 
 import android.app.Activity;
 import android.os.Bundle;

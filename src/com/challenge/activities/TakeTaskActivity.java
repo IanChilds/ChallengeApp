@@ -1,4 +1,4 @@
-package com.challenge;
+package com.challenge.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import com.challenge.schema.GPSConstraint;
+import com.challenge.GlobalDataStore;
+import com.challenge.R;
+import com.challenge.schema.Task;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,10 +1,13 @@
-package com.challenge;
+package com.challenge.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import com.challenge.async.AddUser;
+import com.challenge.GlobalDataStore;
+import com.challenge.R;
 
 public class LoginActivity extends Activity {
     /**

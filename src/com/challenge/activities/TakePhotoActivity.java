@@ -1,4 +1,4 @@
-package com.challenge;
+package com.challenge.activities;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -11,6 +11,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import com.challenge.GlobalDataStore;
+import com.challenge.R;
 
 import java.io.IOException;
 

@@ -1,8 +1,10 @@
-package com.challenge;
+package com.challenge.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.challenge.async.FetchChallenges;
+import com.challenge.R;
 
 /**
  * Created with IntelliJ IDEA.

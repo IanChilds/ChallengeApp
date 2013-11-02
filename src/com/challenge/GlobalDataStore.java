@@ -1,6 +1,9 @@
 package com.challenge;
 
 import android.graphics.Bitmap;
+import com.challenge.schema.Challenge;
+import com.challenge.schema.Profile;
+import com.challenge.schema.Task;
 
 import java.util.ArrayList;
 import java.util.List;

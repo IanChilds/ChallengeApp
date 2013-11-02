@@ -1,4 +1,4 @@
-package com.challenge;
+package com.challenge.activities;
 
 import android.content.Intent;
 import android.location.Location;
@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
+import com.challenge.GlobalDataStore;
+import com.challenge.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;

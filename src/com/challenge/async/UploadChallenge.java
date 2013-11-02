@@ -1,7 +1,9 @@
-package com.challenge;
+package com.challenge.async;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import com.challenge.schema.Challenge;
+import com.challenge.schema.Task;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;

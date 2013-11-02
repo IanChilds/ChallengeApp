@@ -1,4 +1,4 @@
-package com.challenge;
+package com.challenge.schema;
 
 /**
  * Created with IntelliJ IDEA.
